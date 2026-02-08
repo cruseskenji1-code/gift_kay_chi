@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cinnamoroll Bubble Surprise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Comic Sans MS', sans-serif;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(180deg, #e9f9ff, #ffffff);
+    overflow-x: hidden;
+}
+
+/* ================= BUBBLE BACKGROUND ================= */
+.bubble-container {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.bubble {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle at top, #ffffffaa, #bdeaff);
+    box-shadow: inset -5px -5px 15px rgba(255,255,255,0.8);
+    animation: floatUp 18s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bubble img {
+    width: 70px;
+    animation: swing 3s ease-in-out infinite;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(110vh); }
+    to { transform: translateY(-150px); }
+}
+
+@keyframes swing {
+    0% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+    100% { transform: rotate(-6deg); }
+}
+
+/* ================= MAIN CARD ================= */
+.container {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card {
+    background: #fff;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 25px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+h1 {
+    color: #6bb9e8;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.main-img {
+    width: 180px;
+    margin: 15px 0;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.message-box {
+    background: #f1fbff;
+    border-radius: 15px;
+    padding: 15px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+button {
+    background: #8fd3f4;
+    color: white;
+    border: none;
+    padding: 14px 22px;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform .2s, background .3s;
+}
+
+button:hover {
+    background: #6bb9e8;
+    transform: scale(1.05);
+}
+
+/* ================= MODAL ================= */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 25px;
+    padding: 25px;
+    max-width: 360px;
+    width: 90%;
+    text-align: center;
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-content h2 {
+    color: #6bb9e8;
+}
+
+.modal-content p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.close-btn {
+    background: #ddd;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* ================= VIDEO ================= */
+.video-section {
+    display: none;
+    margin-top: 15px;
+}
+
+video {
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 480px) {
+    .bubble {
+        width: 90px;
+        height: 90px;
+    }
+    .bubble img {
+        width: 55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= FLOATING BUBBLES ================= -->
+<div class="bubble-container">
+    <div class="bubble" style="left:10%; animation-duration:16s;">
+        <img src="image/pic1.png">
+    </div>
+    <div class="bubble" style="left:40%; animation-duration:20s;">
+        <img src="image/pic2.png">
+    </div>
+    <div class="bubble" style="left:70%; animation-duration:18s;">
+        <img src="image/pic3.png">
+    </div>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div class="container">
+    <div class="card">
+        <h1>Hello my Babycakes lovicakes ❤️☁️</h1>
+        <p class="subtitle">Gift ko sa’yo this Valentine’s — sana magustuhan mo 💙</p>
+
+        <img class="main-img" src="image/cin.png" alt="Cinnamoroll">
+
+        <div class="message-box" id="messageBox">
+            Click the button to open your message 💕
+        </div>
+
+        <button id="openBtn" onclick="openSurprise()">
+            Open the Message 💌
+        </button>
+
+        <div class="video-section" id="videoSection">
+            <p style="color:#6bb9e8;">This video is just for you 🎥💙</p>
+            <video controls>
+                <source src="your-video.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal" id="messageModal">
+    <div class="modal-content">
+        <h2>For You, My lovicakes💙</h2>
+        <p>
+            Hello, Chi or my lovicakes cutie pie! honeybunch bebeloves #8348375626🥰
+            I just wanted to say how much you mean to me.
+            Before talaga akala ko wala na, magiging forever single na aq pero nung nakilala kita sumakit ulo ko de joke HAHAHA.
+            gusto ko lang din sabhin sayo na sorry sa mga araw na wala ako sa tabi mo pag kailangan mo ko, nag jowa ka ng may trabaho kung nag jowa ka ng tambay maraming oras sayo yan HAHAHA katulad ng sinasabi ko sayo AHAHAHAH, ayun lang, sorry sa mga pang iinis sayo alam mo namn ayun love language ko asarin ka HAHAHAHA, sana maging okay tayo and sana eto na talaga yung end game hehe 
+            and sana nagustuhan mo tong surprise ko na to and sana nakangiti ka ngayon habang binabasa mo to at hindi umiiiyak well ano bang nakakaiyak, sorry wala nako maisip na sasabhin pero ayun sana maging masaya tayo ngayon valentines hehehe        </p>
+
+        <button onclick="openVideo()">Open Video 🎥</button>
+        <br>
+        <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<script>
+function openSurprise() {
+    document.getElementById("messageModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("messageModal").style.display = "none";
+}
+
+function openVideo() {
+    closeModal();
+    document.getElementById("videoSection").style.display = "block";
+    document.getElementById("openBtn").style.display = "none";
+    document.getElementById("messageBox").innerText =
+        "I hope this little surprise makes you smile today 💙";
+}
+</script>
+
+</body>
+</html>
