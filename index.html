@@ -107,7 +107,7 @@ button {
     border-radius: 25px;
     font-size: 15px;
     cursor: pointer;
-    transition: transform .2s;
+    transition: transform .2s, opacity .3s;
 }
 
 button:hover { transform: scale(1.05); }
@@ -129,20 +129,10 @@ button:hover { transform: scale(1.05); }
     padding: 25px;
     width: 100%;
     max-width: 420px;
-    max-height: 85vh;        /* IMPORTANT */
-    overflow-y: auto;        /* SCROLL ENABLED */
+    max-height: 85vh;
+    overflow-y: auto;
     text-align: center;
     animation: pop 0.3s ease;
-}
-
-/* Smooth scrollbar */
-.modal-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-    background: #bdeaff;
-    border-radius: 10px;
 }
 
 @keyframes pop {
@@ -151,14 +141,6 @@ button:hover { transform: scale(1.05); }
 }
 
 .modal-content h2 { color: #6bb9e8; }
-
-.modal-content p {
-    color: #555;
-    font-size: 15px;
-    line-height: 1.6;
-    text-align: left;
-    white-space: pre-line;
-}
 
 .close-btn {
     background: #ddd;
@@ -174,6 +156,25 @@ button:hover { transform: scale(1.05); }
 video {
     width: 100%;
     border-radius: 15px;
+}
+
+#thirdGiftBtn {
+    display: none;
+    margin-top: 15px;
+    animation: fadeIn .5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
 }
 </style>
 </head>
@@ -197,7 +198,7 @@ video {
         <h1>Hello my Babycakes lovicakes ❤️☁️</h1>
         <p class="subtitle">Gift ko pala sa’yo this Valentine’s — sana magustuhan mo hehe💙</p>
 
-        <img class="main-img" src="cin.png" alt="Cinnamoroll">
+        <img class="main-img" src="cin.png">
 
         <div class="message-box" id="messageBox">
             Click the button to open your message 💕
@@ -209,27 +210,49 @@ video {
 
         <div class="video-section" id="videoSection">
             <p style="color:#6bb9e8;">This video is just for you 🎥💙</p>
-            <video controls>
+            <video id="mainVideo" controls>
                 <source src="vid.mp4" type="video/mp4">
             </video>
         </div>
+
+        <button id="thirdGiftBtn">
+            Tap me if you want a 3rd gift for you 🎁
+        </button>
     </div>
 </div>
+
+<!-- FIRST MODAL -->
 <div class="modal" id="messageModal">
     <div class="modal-content">
         <h2>For You, My Lovicakes 💙</h2>
-        <p> Hello, Chi or my lovicakes cutie pie! honeybunch bebeloves #8348375626 🥰 I just wanted to say how much you mean to me. Before talaga akala ko wala na, magiging forever single na ako pero nung nakilala kita sumakit ulo ko de joke HAHAHA. Gusto ko lang din sabihin sayo na sorry sa mga araw na wala ako sa tabi mo pag kailangan mo ko. Nag jowa ka ng may trabaho, kung nag jowa ka ng tambay maraming oras sayo yan HAHAHA katulad ng sinasabi ko sayo palagi AHAHAHAH. Ayun lang, sorry sa mga pang-iinis sayo, alam mo naman love language ko mainis ka palagi HAHAHA. Hindi ko man laging maipakita sa paraan na gusto ko, pero araw-araw kitang pinipili. Kahit pagod ako, kahit stressed, ikaw pa rin yung pinipiling pahinga ko. Oo hindi tayo palaging magkasama, pero alam mo araw-araw at palagi ko kong hinihiling pag nagsisimba tayo na sana ako na yung tamang tao para sayo, na bigyan pako ng sign ni lord na ikaw na yung babae makakasama ko habang buhay. Kasi ayaw kong mawala ka sa buhay ko, at ayoko na mapunta ka sa iba. Gusto ko sakin ka lang habang buhay. Ikaw na yung gusto ko makasama hanggang sa pagtanda ko — yung tipong sasakit ulo naten sa mga anak naten, sabay tumanda, basta sabay mamumuti buhok natin ganun HAHAHA. ayung lang salamat din kasi lagi kang nandiyan. Salamat sa pag-intindi, sa patience, sa lambing, at sa pag suporta sakin. Hindi man ako perfect, pero promise ko na ginagawa ko lahat para maging better for you and for us. Sana maging okay tayo lagi, and sana eto na talaga yung end game hehe. Yung tipong kahit mag-away tayo minsan, tayo pa rin sa huli. And sana nagustuhan mo tong surprise ko na to sorry kung hindi ako marunong mag compose ng message. Sana nakangiti ka ngayon habang binabasa mo to at hindi umiiyak, well ano bang nakakaiyak? HAHAHA. Happy Valentine’s Day, my lovicakes cupcakes sugarplum Chicklet. 💖</p>
-
+        <p style="white-space:pre-line; text-align:left;">
+Happy Valentine’s Day, my lovicakes cupcakes sugarplum Chicklet 💖
+        </p>
         <button onclick="openVideo()">Open Video 🎥</button>
-        <br>
         <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<!-- THIRD GIFT MODAL -->
+<div class="modal" id="thirdGiftModal">
+    <div class="modal-content" id="thirdGiftContent">
+        <h2>Before Opening 🎀</h2>
+        <p style="white-space:pre-line; text-align:left;">
+1. Take a video of you 🎥
+2. Tumalikod ka 😜
+3. Ilagay mo sa password ay: lovicakesnichicklet 💌
+        </p>
+
+        <input type="password" id="giftPassword" placeholder="Enter password here">
+        <button onclick="checkPassword()">Open Final Gift 💖</button>
+        <button class="close-btn" onclick="closeThirdModal()">Close</button>
     </div>
 </div>
 
 <script>
 function openSurprise() {
     document.getElementById("messageModal").style.display = "flex";
-    document.body.style.overflow = "hidden"; // prevent background scroll
+    document.body.style.overflow = "hidden";
 }
 
 function closeModal() {
@@ -243,6 +266,37 @@ function openVideo() {
     document.getElementById("openBtn").style.display = "none";
     document.getElementById("messageBox").innerText =
         "I hope this little surprise makes you smile today 💙";
+
+    const video = document.getElementById("mainVideo");
+    video.onended = function() {
+        document.getElementById("thirdGiftBtn").style.display = "inline-block";
+    };
+}
+
+document.getElementById("thirdGiftBtn").onclick = function() {
+    document.getElementById("thirdGiftModal").style.display = "flex";
+    document.body.style.overflow = "hidden";
+};
+
+function closeThirdModal() {
+    document.getElementById("thirdGiftModal").style.display = "none";
+    document.body.style.overflow = "auto";
+}
+
+function checkPassword() {
+    const password = document.getElementById("giftPassword").value;
+
+    if(password === "lovicakesnichicklet") {
+        document.getElementById("thirdGiftContent").innerHTML = `
+            <h2>Surprise 💖</h2>
+            <p style="text-align:center;">
+                Happy Valentines my pretty honeybunch chicklet 💕
+            </p>
+            <button class="close-btn" onclick="closeThirdModal()">Close</button>
+        `;
+    } else {
+        alert("Wrong password cutie 😜 Try again!");
+    }
 }
 </script>
 
